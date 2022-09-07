@@ -42,15 +42,23 @@ class Server {
 
     sockets(){
         this.io.on('connection', socket  => {
-            console.log('Socket connected');
-    });
-    }
+            console.log('Socket connected', socket.id);
 
-    listen() {
+        socket.on('disconnect', () => {
+            console.log('Disconnect' , socket.id);
+        });  
+        
+        socket.on('send-msg', (payload) => {
+            console.log(payload);
+        });
+    });
+  }
+
+  listen() {
         this.server.listen(this.port, () => console.log('Server started on port', this.port));
     }
 
-}
+  }
 
 
 module.exports = Server;
